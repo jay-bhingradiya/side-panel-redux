@@ -2,28 +2,16 @@ import React from 'react';
 import Sidebar from 'react-sidebar';
 import {useState} from 'react';
 import MovieForm from './MovieForm';
+import {useDispatch, useSelector} from 'react-redux';
+import movieActions from '../redux/movies/actions';
+import EditModal from './EditModal';
+import Button from '@material-ui/core/Button';
+import MovieTable from './MovieTable';
 
-const moviesData = [
-  {
-    id: 1,
-    name: 'Inception',
-    rating: 4.8,
-  },
-  {
-    id: 2,
-    name: 'Drishyam',
-    rating: 4.2,
-  },
-  {
-    id: 3,
-    name: 'The Star Trek',
-    rating: 4.5,
-  },
-];
-
-const SidebarComponent = ({children}) => {
+const SidebarComponent = () => {
+  const dispatch = useDispatch ();
+  const movies = useSelector (state => state.movies.movies);
   const [showSidebar, setshowSidebar] = useState (false);
-  const [movies, setMovies] = useState (moviesData);
   const [editMode, setEditMode] = useState ({
     isOn: false,
     movie: null,
@@ -31,7 +19,7 @@ const SidebarComponent = ({children}) => {
   });
 
   const editHandler = id => {
-    const editMovie = moviesData.find (movie => movie.id === id);
+    const editMovie = movies.find (movie => movie.id === id);
 
     setEditMode ({
       isOn: true,
@@ -50,7 +38,7 @@ const SidebarComponent = ({children}) => {
     updatedMovie = movieData;
     newList[updatedMovieIndex] = updatedMovie;
 
-    setMovies (newList);
+    dispatch (movieActions.editMovie (newList));
     setEditMode ({
       isOn: false,
       movie: {},
@@ -58,20 +46,16 @@ const SidebarComponent = ({children}) => {
     setshowSidebar (false);
   };
 
-  const deleteHandler = id => {
-    let updatedMovie = movies.filter (movie => movie.id !== id);
-    setMovies (updatedMovie);
-  };
+  const deleteHandler = id => dispatch (movieActions.deleteMovie (id));
 
   const addMovie = movieData => {
-    setMovies ([
-      ...movies,
-      {
-        id: Math.random (),
-        ...movieData,
-      },
-    ]);
+    const newMovie = {
+      id: Math.random (),
+      ...movieData,
+    };
+
     setshowSidebar (false);
+    dispatch (movieActions.addMovie (newMovie));
   };
 
   const setOpenHandler = (data = false) => {
@@ -97,30 +81,18 @@ const SidebarComponent = ({children}) => {
       pullRight={true}
       sidebarClassName={'sidebarContentMain'}
     >
-      <table border={1} cellPadding={0} cellSpacing={0}>
-        <thead>
-          <tr>
-            <th>Movie Name</th>
-            <th>Rating</th>
-            <th>actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movies.map (movie => (
-            <tr key={movie.id}>
-              <td>{movie.name}</td>
-              <td>{movie.rating}</td>
-              <td>
-                <button onClick={() => editHandler (movie.id)}>Edit</button>
-                <button onClick={() => deleteHandler (movie.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={() => setshowSidebar (true)}>
-        Add Movie
-      </button>
+      <div className="tableContent">
+
+        <MovieTable movies={movies} onDelete={deleteHandler} />
+        <Button
+          onClick={() => setshowSidebar (true)}
+          color="primary"
+          variant="contained"
+          style={{marginTop: '16px'}}
+        >
+          Add Movie
+        </Button>
+      </div>
     </Sidebar>
   );
 };

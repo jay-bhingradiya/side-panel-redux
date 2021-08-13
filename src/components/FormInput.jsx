@@ -12,15 +12,16 @@ const FormInput = props => {
     error,
     children,
     label,
+    id,
     ...rest
   } = props;
 
   return (
     <Fragment>
       <div className="form-group">
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={id}>{label}</label>
         <input
-          id={name}
+          id={id}
           type={type}
           name={name}
           placeholder={placeholder}

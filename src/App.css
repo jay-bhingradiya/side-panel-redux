@@ -6,3 +6,49 @@
   display: flex;
   flex-direction: column;
 }
+
+th{
+  font-weight: 600 !important;
+}
+
+body{
+  background-color: #382746;
+}
+
+.main{
+  background-color: whitesmoke;
+  margin-left: 50%;
+}
+
+.tableContent {
+  position: absolute;
+  width: 520px;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: white;
+  padding: 16px;
+  border-radius: 5px;
+  text-align: center;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+}
+
+.sidebar-content{
+ padding: 25px 
+}
+
+h3{
+  
+  color: white;
+  background-color: #534190;
+  padding: 9px 15px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.form-btn{
+  margin-top: 10px;
+}

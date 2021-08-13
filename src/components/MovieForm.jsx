@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useEffect} from 'react';
 import FormInput from './FormInput';
+import Button from '@material-ui/core/Button';
 
 const MovieForm = ({addMovie, editMode, editMovie, closeSidebar}) => {
   const [movieData, setMovieData] = useState ({
@@ -52,15 +53,11 @@ const MovieForm = ({addMovie, editMode, editMovie, closeSidebar}) => {
     e.preventDefault ();
 
     let err = {};
-
     if (!movieData.name) err.name = 'Please enter Movie name';
     if (!movieData.rating) err.rating = 'Please enter Movie rating';
-
     setErrors (err);
 
-    if (Object.getOwnPropertyNames (err).length !== 0) {
-      return;
-    }
+    if (Object.getOwnPropertyNames (err).length !== 0) return;
 
     if (editMode.isOn) {
       editMovie ({
@@ -78,11 +75,11 @@ const MovieForm = ({addMovie, editMode, editMovie, closeSidebar}) => {
   };
 
   return (
-    <div>
-      <h3>Add Movie</h3>
-      <h4>{editMode.isOn ? editMode.movie.name : 'In Add Mode'}</h4>
+    <div className="sidebar-content">
+      <h3>Add Your Favorite Movie</h3>
       <form onSubmit={submitHandler}>
         <FormInput
+          id="movie name"
           label="Movie Name"
           name="name"
           type="text"
@@ -91,6 +88,7 @@ const MovieForm = ({addMovie, editMode, editMovie, closeSidebar}) => {
           error={errors.name}
         />
         <FormInput
+          id="movie rating"
           label="Rating"
           name="rating"
           type="number"
@@ -101,8 +99,29 @@ const MovieForm = ({addMovie, editMode, editMovie, closeSidebar}) => {
           error={errors.rating}
           step=".01"
         />
-        <input type="submit" value="Submit" />
-        <button onClick={closeHandler} type="button">Cancel</button>
+        <div className="form-btn">
+
+          <Button
+            color="primary"
+            size="small"
+            variant="outlined"
+            onClick={submitHandler}
+            type="button"
+          >
+            Submit Movie
+            {/* <input type="submit" value="Submit" /> */}
+          </Button>
+          <Button
+            color="secondary"
+            size="small"
+            variant="contained"
+            onClick={closeHandler}
+            type="button"
+            style={{marginLeft: '10px'}}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
   );
