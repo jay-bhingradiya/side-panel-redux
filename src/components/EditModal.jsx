@@ -1,93 +1,92 @@
-import {Button} from '@material-ui/core';
-import React, {useEffect, useState, Fragment} from 'react';
-import Modal from 'react-modal';
-import {useDispatch, useSelector} from 'react-redux';
-import movieActions from '../redux/movies/actions';
-import FormInput from './FormInput';
+import { Button } from "@material-ui/core";
+import React, { useEffect, useState, Fragment } from "react";
+import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import movieActions from "../redux/movies/actions";
+import FormInput from "./FormInput";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 };
 
-Modal.setAppElement ('#root');
+Modal.setAppElement("#root");
 
-const EditModal = ({movieId}) => {
-  const dispatch = useDispatch ();
-  const [modalIsOpen, setIsOpen] = useState (false);
-  const movies = useSelector (state => state.movies.movies);
-  const currentMovie = movies.find (movie => movie.id === movieId);
-  const [movieData, setMovieData] = useState ({
-    name: '',
-    rating: '',
+const EditModal = ({ movieId }) => {
+  const dispatch = useDispatch();
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const movies = useSelector((state) => state.movies.movies);
+  const currentMovie = movies.find((movie) => movie.id === movieId);
+  const [movieData, setMovieData] = useState({
+    name: "",
+    rating: "",
   });
 
-  useEffect (
-    () => {
-      setMovieData ({
-        name: currentMovie.name,
-        rating: currentMovie.rating,
-      });
-    },
-    [currentMovie]
-  );
+  useEffect(() => {
+    setMovieData({
+      name: currentMovie.name,
+      rating: currentMovie.rating,
+    });
+  }, [currentMovie]);
 
-  function openModal () {
-    setIsOpen (true);
+  function openModal() {
+    setIsOpen(true);
   }
 
-  function closeModal () {
-    setIsOpen (false);
+  function closeModal() {
+    setIsOpen(false);
   }
 
-  const [errors, setErrors] = useState ({});
+  const [errors, setErrors] = useState({});
 
   const closeHandler = () => {
-    setMovieData ({
-      name: '',
-      rating: '',
+    setMovieData({
+      name: "",
+      rating: "",
     });
   };
 
-  const onChangeHandler = e => {
-    setMovieData ({
+  const onChangeHandler = (e) => {
+    setMovieData({
       ...movieData,
       [e.target.name]: e.target.value,
     });
 
     let name = e.target.name;
 
-    if (e.target.value === '') {
-      setErrors ({
+    if (e.target.value === "") {
+      setErrors({
         ...errors,
         [e.target.name]: `Enter Enter Movie${e.target.name}`,
       });
     } else {
-      let newList = {...errors};
+      let newList = { ...errors };
       delete newList[name];
-      setErrors (newList);
+      setErrors(newList);
     }
   };
 
-  const submitHandler = e => {
-    e.preventDefault ();
+  const submitHandler = (e) => {
+    e.preventDefault();
 
     let err = {};
-    if (!movieData.name) err.name = 'Please enter Movie name';
-    if (!movieData.rating) err.rating = 'Please enter Movie rating';
-    setErrors (err);
+    if (!movieData.name) err.name = "Please enter Movie name";
+    if (!movieData.rating) err.rating = "Please enter Movie rating";
+    setErrors(err);
 
-    if (Object.getOwnPropertyNames (err).length !== 0) return;
+    // Testing Repo
+
+    if (Object.getOwnPropertyNames(err).length !== 0) return;
 
     let newList = [...movies];
-    let updatedMovieIndex = newList.findIndex (
-      movie => movie.id === currentMovie.id
+    let updatedMovieIndex = newList.findIndex(
+      (movie) => movie.id === currentMovie.id
     );
     let editedMovie = {
       id: currentMovie.id,
@@ -95,13 +94,13 @@ const EditModal = ({movieId}) => {
       rating: movieData.rating,
     };
     newList[updatedMovieIndex] = editedMovie;
-    dispatch (movieActions.editMovie (newList));
+    dispatch(movieActions.editMovie(newList));
 
-    setMovieData ({
-      name: '',
-      rating: '',
+    setMovieData({
+      name: "",
+      rating: "",
     });
-    setIsOpen (false);
+    setIsOpen(false);
   };
 
   return (
@@ -145,7 +144,7 @@ const EditModal = ({movieId}) => {
             step=".01"
           />
           <input type="submit" value="Submit" />
-          <button onClick={() => setIsOpen (false)} type="button">
+          <button onClick={() => setIsOpen(false)} type="button">
             Cancel
           </button>
         </form>
