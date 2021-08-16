@@ -1,7 +1,7 @@
-import React from 'react';
-import {Fragment} from 'react';
+import React from "react";
+import { Fragment } from "react";
 
-const FormInput = props => {
+const FormInput = (props) => {
   const {
     name,
     type,
@@ -18,8 +18,8 @@ const FormInput = props => {
 
   return (
     <Fragment>
-      <div className="form-group">
-        <label htmlFor={id}>{label}</label>
+      <div className="form-div">
+        <span htmlFor={id}>{label}</span>
         <input
           id={id}
           type={type}
@@ -27,12 +27,11 @@ const FormInput = props => {
           placeholder={placeholder}
           onChange={onChange}
           value={value}
-          // className={className}
-          className={'form-control' + className}
-          style={error && {border: '1px solid red'}}
+          className={"form-input"}
+          style={error && { border: "1px solid red" }}
           {...rest}
         />
-        {error && <small style={{color: 'red'}}>{error}</small>}
+        {error && <small style={{ color: "red" }}>{error}</small>}
       </div>
     </Fragment>
   );

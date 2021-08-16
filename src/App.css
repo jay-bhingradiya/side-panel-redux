@@ -1,21 +1,21 @@
-.sidebarContentMain{
-  background-color: white; 
+.sidebarContentMain {
+  background-color: white;
 }
 
-.form-group{
+.form-group {
   display: flex;
   flex-direction: column;
 }
 
-th{
+th {
   font-weight: 600 !important;
 }
 
-body{
+body {
   background-color: #382746;
 }
 
-.main{
+.main {
   background-color: whitesmoke;
   margin-left: 50%;
 }
@@ -25,23 +25,22 @@ body{
   width: 520px;
   top: 38%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 16px;
   border-radius: 5px;
   text-align: center;
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
 
-.sidebar-content{
- padding: 25px 
+.sidebar-content {
+  padding: 25px;
 }
 
-h3{
-  
+h3 {
   color: white;
   background-color: #534190;
   padding: 9px 15px;
@@ -49,6 +48,35 @@ h3{
   border-radius: 5px;
 }
 
-.form-btn{
+.form-btn {
   margin-top: 10px;
+}
+
+.main-member-form {
+  background-color: #393f44;
+  color: white;
+  padding: 40px 0;
+  border-radius: 5px;
+}
+
+.form-div {
+  display: flex;
+  flex-direction: column;
+  /* height: 100px; */
+  margin-bottom: 10px;
+}
+
+.form-div span
+ /* .label-form  */ {
+  font-weight: 400;
+  animation: error-animation 1s ease-out backwards;
+  transition: all 1s;
+  margin-bottom: 4px;
+}
+
+.form-input {
+  padding: 10px 15px;
+  border: 1px solid #ced3d8;
+  border-radius: 4px;
+  animation: error-animation 1s ease-out backwards;
 }
