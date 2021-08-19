@@ -28,6 +28,7 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
       name: "",
       rating: "",
     });
+    setErrors({});
   };
 
   const onChangeHandler = (e) => {
@@ -37,25 +38,39 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
     });
 
     let name = e.target.name;
+    let value = e.target.value;
 
     if (e.target.value === "") {
       setErrors({
         ...errors,
-        [e.target.name]: `Enter Enter Movie${e.target.name}`,
+        [e.target.name]: `Enter Movie ${e.target.name}`,
       });
-    } else {
-      let newList = { ...errors };
-      delete newList[name];
-      setErrors(newList);
+      return;
     }
+
+    if (name === "rating") {
+      if (value < 1 || value > 5) {
+        setErrors({
+          ...errors,
+          [e.target.name]: `Enter Rating between 1 to 5`,
+        });
+        return;
+      }
+    }
+
+    let newList = { ...errors };
+    delete newList[name];
+    setErrors(newList);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (Object.keys(errors).length !== 0) return;
+
     let err = {};
-    if (!movieData.name) err.name = "Please enter Movie name";
-    if (!movieData.rating) err.rating = "Please enter Movie rating";
+    if (!movieData.name) err.name = "Enter Movie name";
+    if (!movieData.rating) err.rating = "Enter Movie rating";
     setErrors(err);
 
     if (Object.getOwnPropertyNames(err).length !== 0) return;

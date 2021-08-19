@@ -12,6 +12,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    width: "300px",
   },
 };
 
@@ -37,6 +38,18 @@ const EditModal = ({ movieId }) => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const modalClasses = {
+    base: "customModalContent",
+    afterOpen: "modalContentOpen",
+    beforeClose: "modalContentClose",
+  };
+
+  const overLayClasses = {
+    base: "customModalOverlay",
+    beforeClose: "overlayClose",
+    afterOpen: "overlayOpen",
+  };
+
   return (
     <Fragment>
       <Button
@@ -52,6 +65,9 @@ const EditModal = ({ movieId }) => {
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
+        overlayClassName={overLayClasses}
+        className={modalClasses}
+        closeTimeoutMS={300}
       >
         <Form
           initialMovieData={movieData}

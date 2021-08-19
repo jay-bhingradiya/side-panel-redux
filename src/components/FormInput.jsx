@@ -19,7 +19,7 @@ const FormInput = (props) => {
   return (
     <Fragment>
       <div className="form-div">
-        <span htmlFor={id}>{label}</span>
+        <label htmlFor={id}>{label}</label>
         <input
           id={id}
           type={type}
