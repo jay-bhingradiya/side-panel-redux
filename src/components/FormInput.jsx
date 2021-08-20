@@ -18,7 +18,7 @@ const FormInput = (props) => {
 
   return (
     <Fragment>
-      <div className="form-div">
+      <div className="form-div" style={{ height: "70px" }}>
         <label htmlFor={id}>{label}</label>
         <input
           id={id}
@@ -27,6 +27,7 @@ const FormInput = (props) => {
           placeholder={placeholder}
           onChange={onChange}
           value={value}
+          autocomplete="off"
           className={"form-input"}
           style={error && { border: "1px solid red" }}
           {...rest}

@@ -1,9 +1,9 @@
 import { Fragment, useState } from "react";
 import { useEffect } from "react";
-import FormInput from "./FormInput";
-import Button from "@material-ui/core/Button";
 import { useSelector, useDispatch } from "react-redux";
+import Button from "@material-ui/core/Button";
 import movieActions from "../redux/movies/actions";
+import FormInput from "./FormInput";
 
 const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
     rating: "",
   });
   const [errors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(true);
 
   useEffect(() => {
     setMovieData({
@@ -21,6 +22,18 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
       id: initialMovieData.id,
     });
   }, [initialMovieData]);
+
+  useEffect(() => {
+    if (
+      movieData.name.length &&
+      movieData.rating.length !== 0 &&
+      !Object.keys(errors).length
+    ) {
+      setIsSubmit(true);
+    } else {
+      setIsSubmit(false);
+    }
+  }, [movieData]);
 
   const closeHandler = () => {
     closeSidebar();
@@ -66,16 +79,7 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (Object.keys(errors).length !== 0) return;
-
-    let err = {};
-    if (!movieData.name) err.name = "Enter Movie name";
-    if (!movieData.rating) err.rating = "Enter Movie rating";
-    setErrors(err);
-
-    if (Object.getOwnPropertyNames(err).length !== 0) return;
-
-    if (initialMovieData.id !== "") {
+    if (initialMovieData.id !== "" && mode === "edit") {
       let newList = [...movies];
       let updatedMovie = newList.find(
         (movie) => movie.id === initialMovieData.id
@@ -132,9 +136,10 @@ const Form = ({ initialMovieData, closeSidebar, title, mode }) => {
           <Button
             color="primary"
             size="small"
-            variant="outlined"
+            variant="contained"
             onClick={submitHandler}
             type="submit"
+            disabled={!isSubmit}
           >
             Submit Movie
           </Button>

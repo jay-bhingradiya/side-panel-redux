@@ -33,7 +33,7 @@ const EditModal = ({ movieId }) => {
       name: currentMovie.name,
       rating: currentMovie.rating,
     });
-  }, [currentMovie]);
+  }, [currentMovie, movieId]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
