@@ -27,6 +27,7 @@ const SidebarComponent = () => {
       onSetOpen={(data) => setOpenHandler(data)}
       pullRight={true}
       sidebarClassName={"sidebarContentMain"}
+      overlayClassName={"sidebarOverlay"}
     >
       <div className="tableContent">
         <header>

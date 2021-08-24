@@ -67,7 +67,7 @@ const EditModal = ({ movieId }) => {
         contentLabel="Example Modal"
         overlayClassName={overLayClasses}
         className={modalClasses}
-        closeTimeoutMS={300}
+        closeTimeoutMS={500}
       >
         <Form
           initialMovieData={movieData}
